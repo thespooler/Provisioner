@@ -78,21 +78,19 @@ class endpoint_grandstream_gxphd_phone extends endpoint_grandstream_base {
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($ch, CURLOPT_POST, true);
 
-                    $data = array(
-                        'P2' => $pass,
-                        'Login' => 'Login',
-                        'gnkey' => '0b82'
-                    );
+                    $data = array( 'password' => $pass );
 
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
                     $output = curl_exec($ch);
                     $info = curl_getinfo($ch);
                     curl_close($ch);
 
-                    $ch = curl_init("http://" . $ip . "/cgi-bin/rs");
+                    $ch = curl_init("http://" . $ip . "/cgi-bin/api-sys_operation");
+                    $data = array( 'request' => 'REBOOT' );
+                    curl_setopt($ch, CURLOPT_POST, true);
                     curl_setopt($ch, CURLOPT_COOKIEFILE, $ckfile);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     $output = curl_exec($ch);
+                    var_dump($output);
                     curl_close($ch);
                 }
             }
